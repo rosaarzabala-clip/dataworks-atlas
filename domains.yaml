@@ -1,0 +1,68 @@
+# Domain taxonomy and classification rules. DRAFT: see docs/03-lineage-graph-plan.md, section 4.
+# Rules are applied in this order, first match wins:
+#   overrides -> datasource/schema -> table prefix -> lineage propagation -> unclassified
+# Seed values come from docs/02-dataworks-architecture.md, section 3.2. Validate against real nodes.
+
+domains:
+  - member
+  - acquiring
+  - settlement
+  - fund
+  - promotion
+  - payment
+  - accounting
+  - financial
+  - boss
+  - real_time
+  - mobile
+  - merchant
+
+# Table or node name prefix -> domain.
+prefixes:
+  bp_: member
+  cu_: member
+  acc_: member
+  fc_: member
+  lc_: member
+  aqc_: acquiring
+  smb_: settlement
+  smt_: settlement
+  ap_fund_: fund
+  sd_: promotion
+  bcvoucher_: promotion
+  marketing_: promotion
+  rule_: promotion
+  af_: payment
+  det_: accounting
+  int_: accounting
+  ren_: accounting
+  rc_: accounting
+  flux_: financial
+  gw_: financial
+  ar_: boss
+  pf_: boss
+  fee_: boss
+  idt_: real_time
+  gt_: real_time
+  mcore_: mobile
+  # atc_ appears under both Member and Accounting in the source doc: decide before enabling.
+
+# Source datasource / schema name prefix -> domain (ODS sync nodes).
+datasources:
+  aqc: acquiring
+  settlement: settlement
+  settlebill: settlement
+  apfund: fund
+  assetflux: payment
+  fee: boss
+  idt: real_time
+  ifcgotone: real_time
+  apmobileprod: mobile
+
+# Explicit decisions. Always win. Format: <exact node or table name>: <domain>
+overrides: {}
+
+# Lineage propagation: a node takes the domain of its upstream tables when at
+# least this share of them agree. Otherwise it is flagged cross_domain.
+propagation:
+  min_agreement: 0.8

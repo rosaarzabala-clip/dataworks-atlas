@@ -1,0 +1,24 @@
+# Secrets and local config
+.env
+.env.*
+!.env.example
+
+# Neo4j database files
+neo4j/
+
+# Extracted DataWorks snapshots (may contain code and metadata)
+data/snapshots/
+
+# Generated reports (regenerate with `python -m dwgraph ...`)
+reports/
+
+# Python
+.venv/
+__pycache__/
+*.egg-info/
+*.pyc
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
